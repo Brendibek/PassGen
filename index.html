@@ -1,1 +1,58 @@
-hello world
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Password Generator</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+  }
+  #password {
+    font-size: 20px;
+    margin: 20px;
+  }
+  #generateBtn, #copyBtn {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+  <h1>Password Generator</h1>
+  <label for="length">Password Length:</label>
+  <input type="number" id="length" min="1" max="25" value="15">
+  <br>
+  <div id="password">Your generated password will appear here.</div>
+  <button id="generateBtn">Generate Password</button>
+  <button id="copyBtn">Copy Password</button>
+
+  <script>
+    document.getElementById("generateBtn").addEventListener("click", function() {
+      var length = document.getElementById("length").value;
+      var charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_-+=<>?";
+      var password = "";
+
+      for (var i = 0; i < length; i++) {
+        var randomIndex = Math.floor(Math.random() * charset.length);
+        password += charset.charAt(randomIndex);
+      }
+
+      document.getElementById("password").textContent = password;
+    });
+
+    document.getElementById("copyBtn").addEventListener("click", function() {
+      var passwordText = document.getElementById("password");
+      var range = document.createRange();
+      range.selectNode(passwordText);
+      window.getSelection().removeAllRanges();
+      window.getSelection().addRange(range);
+      document.execCommand("copy");
+      window.getSelection().removeAllRanges();
+      alert("Password copied to clipboard");
+    });
+  </script>
+</body>
+</html>
