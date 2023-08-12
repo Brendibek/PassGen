@@ -9,11 +9,21 @@
     font-family: Arial, sans-serif;
     text-align: center;
   }
+  #passwordContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+  }
   #password {
     font-size: 20px;
-    margin: 20px;
+    background-color: aqua;
+    padding: 10px;
+    border-radius: 5px;
+    flex-grow: 1;
   }
   #generateBtn, #copyBtn {
+    margin-left: 10px;
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
@@ -25,32 +35,50 @@
   <label for="length">Password Length:</label>
   <input type="number" id="length" min="1" max="25" value="15">
   <br>
-  <div id="password">Your generated password will appear here.</div>
-  <button id="generateBtn">Generate Password</button>
-  <button id="copyBtn">Copy Password</button>
+  <label>Character Set:</label>
+  <input type="checkbox" id="includeLower" checked> <label for="includeLower">Lowercase</label>
+  <input type="checkbox" id="includeUpper" checked> <label for="includeUpper">Uppercase</label>
+  <input type="checkbox" id="includeNumbers" checked> <label for="includeNumbers">Numbers</label>
+  <input type="checkbox" id="includeSpecial" checked> <label for="includeSpecial">Special Characters</label>
+  <br>
+  <div id="passwordContainer">
+    <textarea id="password" rows="4" cols="50" readonly>Your generated password will appear here.</textarea>
+    <button id="generateBtn">Generate Password</button>
+    <button id="copyBtn">Copy Password</button>
+  </div>
 
   <script>
     document.getElementById("generateBtn").addEventListener("click", function() {
       var length = document.getElementById("length").value;
-      var charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_-+=<>?";
+      var charset = "";
+      
+      if (document.getElementById("includeLower").checked) {
+        charset += "abcdefghijklmnopqrstuvwxyz";
+      }
+      if (document.getElementById("includeUpper").checked) {
+        charset += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+      }
+      if (document.getElementById("includeNumbers").checked) {
+        charset += "0123456789";
+      }
+      if (document.getElementById("includeSpecial").checked) {
+        charset += "!@#$%^&*()_-+=<>?";
+      }
+      
       var password = "";
-
+      
       for (var i = 0; i < length; i++) {
         var randomIndex = Math.floor(Math.random() * charset.length);
         password += charset.charAt(randomIndex);
       }
-
+      
       document.getElementById("password").textContent = password;
     });
 
     document.getElementById("copyBtn").addEventListener("click", function() {
       var passwordText = document.getElementById("password");
-      var range = document.createRange();
-      range.selectNode(passwordText);
-      window.getSelection().removeAllRanges();
-      window.getSelection().addRange(range);
+      passwordText.select();
       document.execCommand("copy");
-      window.getSelection().removeAllRanges();
       alert("Password copied to clipboard");
     });
   </script>
