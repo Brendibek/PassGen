@@ -11,22 +11,29 @@
   }
   #passwordContainer {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     margin-top: 20px;
   }
-  #password {
-    font-size: 20px;
-    background-color: aqua;
-    padding: 10px;
-    border-radius: 5px;
-    flex-grow: 1;
+  #buttonField {
+    display: flex;
+    margin-top: 10px;
   }
   #generateBtn, #copyBtn {
-    margin-left: 10px;
+    margin: 0 10px;
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
+  }
+  #password {
+    font-size: 18px;
+    background-color: aqua;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+	width: 340px;
+	text-align: center;ы
   }
 </style>
 </head>
@@ -42,9 +49,13 @@
   <input type="checkbox" id="includeSpecial" checked> <label for="includeSpecial">Special Characters</label>
   <br>
   <div id="passwordContainer">
-    <textarea id="password" rows="4" cols="50" readonly>Your generated password will appear here.</textarea>
-    <button id="generateBtn">Generate Password</button>
-    <button id="copyBtn">Copy Password</button>
+    <div id="buttonField">
+      <button id="generateBtn">Generate Password</button>
+      <button id="copyBtn">Copy Password</button>
+    </div>
+    <div>
+      <input type="text" id="password" value="Your generated password will appear here." readonly>
+    </div>
   </div>
 
   <script>
@@ -72,7 +83,7 @@
         password += charset.charAt(randomIndex);
       }
       
-      document.getElementById("password").textContent = password;
+      document.getElementById("password").value = password;
     });
 
     document.getElementById("copyBtn").addEventListener("click", function() {
@@ -83,4 +94,4 @@
     });
   </script>
 </body>
-</html>
+</html
